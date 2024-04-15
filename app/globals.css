@@ -1,3 +1,14 @@
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -38,6 +49,21 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  /* My custom colors */
+  --primary-dark: #003366;
+  --primary-light: #6699cc;
+  --primary-light-transparent: #6699cc33;
+  --secondary-dark: #f0f0f0;
+  --secondary-light: #ffff;
+
+  --font-size-xs: 0.625rem;
+  --font-size-sm: 0.8rem;
+  --font-size-regular: 1rem;
+  --font-size-md: 1.5rem;
+  --font-size-lg: 1.8rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 2.4rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,13 +112,13 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 a {
@@ -105,3 +131,8 @@ a {
     color-scheme: dark;
   }
 }
+
+.e-control {
+  font-family: var(--font-inter);
+}
+
