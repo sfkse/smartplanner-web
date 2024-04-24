@@ -1,6 +1,5 @@
 "use client";
 import styled from "styled-components";
-import Calendar from "@/app/ui/Calendar";
 import Link from "next/link";
 
 export default function Home() {

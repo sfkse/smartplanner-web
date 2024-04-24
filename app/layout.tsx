@@ -1,16 +1,12 @@
 "use client";
 
 import { Lato } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/app/ui/Navbar";
-import { registerLicense } from "@syncfusion/ej2-base";
+import "@/app/(authenticated)/globals.css";
 import { ThemeProvider, createTheme } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
-
-// registerLicense(
-//   "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtfcnRWRWNYUkRzWEY="
-// );
 
 export default function RootLayout({
   children,
@@ -23,10 +19,8 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={lato.className}>
-        <ThemeProvider theme={theme}>
-          <Navbar />
-          {children}
-        </ThemeProvider>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ToastContainer />
       </body>
     </html>
   );
