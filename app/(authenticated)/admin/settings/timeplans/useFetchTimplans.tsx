@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getLessons } from "@/app/(authenticated)/api/lessons";
-import { getTimeplans } from "../../api/timeplans";
+import { getTimeplans } from "../../../api/timeplans";
 
 export const useFetchTimeplans = () => {
   const { data, isPending, error } = useQuery({

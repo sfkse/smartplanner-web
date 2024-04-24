@@ -1,5 +1,5 @@
 import { signIn } from "@/app/(authenticated)/api/auth";
-import { User } from "@/app/(authenticated)/settings/users/types";
+import { User } from "@/app/(authenticated)/admin/settings/users/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";

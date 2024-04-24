@@ -10,11 +10,11 @@ function layout({
   children: React.ReactNode;
 }>) {
   const settingsMenu = [
-    { name: "KLASSER", href: "/settings/classes" },
-    { name: "KURSER", href: "/settings/lessons" },
-    { name: "LÄRARE", href: "/settings/users" },
-    { name: "TIMPLANER", href: "/settings/timeplans" },
-    { name: "ADMINS", href: "/settings/admins" },
+    { name: "KLASSER", href: "/admin/settings/classes" },
+    { name: "KURSER", href: "/admin/settings/lessons" },
+    { name: "LÄRARE", href: "/admin/settings/users" },
+    { name: "TIMPLANER", href: "/admin/settings/timeplans" },
+    { name: "ADMINS", href: "/admin/settings/admins" },
   ];
   return (
     <>

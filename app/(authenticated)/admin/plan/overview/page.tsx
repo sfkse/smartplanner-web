@@ -3,8 +3,8 @@
 import React from "react";
 import Calendar from "@/app/(authenticated)/ui/Calendar";
 import styled from "styled-components";
-import DropdownList from "../../ui/DropdownList";
-import Options from "../../ui/Options";
+import DropdownList from "../../../ui/DropdownList";
+import Options from "../../../ui/Options";
 
 function Page() {
   const classFilter = ["Class 6C", "Class 7A", "Class 8B"];

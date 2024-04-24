@@ -14,13 +14,13 @@ const Navbar = () => {
       <Wrapper>
         <Logo>TIMEX</Logo>
         <Links>
-          <MenuLink pathname={pathname} href="/">
+          <MenuLink pathname={pathname} href="/admin">
             DASHBOARD
           </MenuLink>
-          <MenuLink pathname={pathname} href="/plan/overview">
+          <MenuLink pathname={pathname} href="/admin/plan/overview">
             PLANERING
           </MenuLink>
-          <MenuLink pathname={pathname} href="/settings/classes">
+          <MenuLink pathname={pathname} href="/admin/settings/classes">
             INSTÄLLNINGAR
           </MenuLink>
         </Links>

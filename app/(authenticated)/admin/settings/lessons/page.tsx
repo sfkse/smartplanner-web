@@ -10,15 +10,14 @@ import DialogPopup from "@/app/(authenticated)/ui/DialogPopup";
 import Button from "@/app/(authenticated)/ui/Button";
 import Table from "@/app/(authenticated)/ui/Table";
 
-import { useFetchClasses } from "./useFetchClasses";
-
-import Loading from "../../loading";
-import { useCreateClass } from "./useCreateClass";
-import { Class } from "./types";
-import { ModalContent } from "../../types/modal";
-import { useUpdateClass } from "./useUpdateClass";
-import { useRemoveClass } from "./useRemoveClass";
-import AddButton from "../../ui/AddButton";
+import Loading from "../../../loading";
+import { Lesson } from "./types";
+import { ModalContent } from "../../../types/modal";
+import { useUpdateLesson } from "./useUpdateLesson";
+import AddButton from "../../../ui/AddButton";
+import { useFetchLessons } from "./useFetchLessons";
+import { useCreateLesson } from "./useCreateLesson";
+import { useRemoveLesson } from "./useRemoveLesson";
 
 function Page() {
   const [modal, setModal] = useState({
@@ -37,24 +36,24 @@ function Page() {
     value: string;
   } | null>(null);
 
-  const { classes, error, isPending } = useFetchClasses();
+  const { lessons, error, isPending } = useFetchLessons();
   const {
     mutate,
     error: createError,
     isPending: createPending,
-  } = useCreateClass();
+  } = useCreateLesson();
 
   const {
-    mutate: updateClass,
+    mutate: updateLesson,
     error: updateError,
     isPending: updatePending,
-  } = useUpdateClass();
+  } = useUpdateLesson();
 
   const {
-    mutate: removeClass,
+    mutate: removeLesson,
     error: removeError,
     isPending: removePending,
-  } = useRemoveClass();
+  } = useRemoveLesson();
 
   function fetchTableActions(id: string) {
     return [
@@ -62,14 +61,14 @@ function Page() {
         text: "Delete",
         color: "error",
         icon: <DeleteForeverOutlinedIcon />,
-        callback: () => handleRemoveClass(id),
+        callback: () => handleRemoveLesson(id),
       },
     ];
   }
 
   const tableHeaders = ["Klassnamn", "Actions"]; // Column tableHeaders expected in the data object
 
-  const tableData = classes.map((klass: Class) => {
+  const tableData = lessons.map((klass: Lesson) => {
     return {
       Klassnamn: (
         <>
@@ -85,7 +84,7 @@ function Page() {
           />
         </>
       ),
-      Actions: fetchTableActions(klass.idclasses),
+      Actions: fetchTableActions(klass.idlessons),
     };
   });
 
@@ -93,39 +92,39 @@ function Page() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries((formData as any).entries());
-    if (modal.modalType === "create") mutate(formJson as Class);
+    if (modal.modalType === "create") mutate(formJson as Lesson);
     if (modal.modalType === "edit") {
       const data = {
-        idclasses: classNameInput.current.idclasses,
+        idlessons: classNameInput.current.idclasses,
         name: classNameInput.current.value,
       };
-      updateClass(data);
+      updateLesson(data);
     }
     if (modal.modalType === "remove") {
-      removeClass(modal.dataToDelete);
+      removeLesson(modal.dataToDelete);
     }
 
     handleClose();
   };
 
-  function handleEditClassName(klass: Class) {
+  function handleEditClassName(klass: Lesson) {
     console.log("Edit", klass);
     setModal({
       ...modal,
       open: true,
       modalType: "edit",
       content: {
-        title: "Edit Class",
+        title: "Edit Lesson",
         description: "",
         fields: [
           {
-            label: "Class Name",
+            label: "Lesson Name",
             name: "name",
             type: "text",
             value: klass.name,
             handleOnChange: (e: React.ChangeEvent<HTMLInputElement>) => {
               classNameInput.current = {
-                idclasses: klass.idclasses,
+                idclasses: klass.idlessons,
                 value: e.target.value,
               };
             },
@@ -141,11 +140,11 @@ function Page() {
       open: true,
       modalType: "create",
       content: {
-        title: "Create New Class",
+        title: "Create New Lesson",
         description: "",
         fields: [
           {
-            label: "Class Name",
+            label: "Lesson Name",
             name: "name",
             type: "text",
           },
@@ -154,15 +153,15 @@ function Page() {
     });
   };
 
-  const handleRemoveClass = (id: string) => {
+  const handleRemoveLesson = (id: string) => {
     setModal({
       ...modal,
       open: true,
       modalType: "remove",
       dataToDelete: id,
       content: {
-        title: "Delete Class",
-        description: "Are you sure you want to delete this class?",
+        title: "Delete Lesson",
+        description: "Are you sure you want to delete this lesson?",
         fields: [],
       },
     });

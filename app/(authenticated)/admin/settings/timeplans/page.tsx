@@ -13,12 +13,12 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { useRouter } from "next/navigation";
 import { useFetchClasses } from "../classes/useFetchClasses";
-import Loading from "../../loading";
+import Loading from "../../../loading";
 import { ClassTimeplan } from "./types";
 import { Class } from "../classes/types";
 import { useFetchClassTimeplans } from "./useFetchClassTimeplans";
-import AddButton from "../../ui/AddButton";
-import { ModalContent } from "../../types/modal";
+import AddButton from "../../../ui/AddButton";
+import { ModalContent } from "../../../types/modal";
 import { useCreateClassTimeplan } from "./useCreateClassTimeplan";
 import { useUpdateClassTimeplan } from "./useUpdateClassTimeplan";
 import { useRemoveTimeplan } from "./useRemoveTimeplan";
@@ -108,7 +108,7 @@ function Page() {
       {
         text: "SET TIMES",
         icon: <AccessTimeOutlinedIcon />,
-        callback: () => router.push(`/settings/timeplans/${id}`),
+        callback: () => router.push(`/admin/settings/timeplans/${id}`),
       },
       {
         text: "Delete",

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createClass } from "@/app/(authenticated)/api/classes";
 import { createLesson } from "@/app/(authenticated)/api/lessons";
-import { createUser } from "../../api/users";
+import { createUser } from "../../../api/users";
 import { User } from "./types";
 
 type FormState = {

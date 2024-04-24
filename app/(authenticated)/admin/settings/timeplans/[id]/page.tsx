@@ -107,7 +107,7 @@ function Page() {
           submit={() => {}}
         />
         <HeaderWrapper>
-          <BackButton path="/settings/timeplans" />
+          <BackButton path="/admin/settings/timeplans" />
         </HeaderWrapper>
         <ContentWrapper>
           <Header>{singleClassTimeplans[0]?.timeplanname}</Header>

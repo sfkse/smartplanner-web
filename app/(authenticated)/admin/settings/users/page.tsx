@@ -14,7 +14,7 @@ import Button from "@/app/(authenticated)/ui/Button";
 import Table from "@/app/(authenticated)/ui/Table";
 import { useFetchUsers } from "./useFetchUsers";
 import { useCreateUser } from "./useCreateUser";
-import Loading from "../../loading";
+import Loading from "../../../loading";
 import { User } from "./types";
 
 function Page() {

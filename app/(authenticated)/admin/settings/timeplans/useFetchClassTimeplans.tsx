@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getClassTimeplans } from "../../api/timeplans";
+import { getClassTimeplans } from "../../../api/timeplans";
 
 export const useFetchClassTimeplans = () => {
   const { data, isPending, error } = useQuery({
