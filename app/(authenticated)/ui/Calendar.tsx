@@ -20,16 +20,12 @@ import { extend } from "@syncfusion/ej2-base";
 
 import dataSource from "@/app/(authenticated)/utils/dataSource.json";
 import CalendarPopUpTemplate from "@/app/(authenticated)/ui/CalendarPopUpTemplate";
+import { useFetchRequests } from "../(adminPages)/admin/plan/overview/useFetchRequests";
 
 function Calendar() {
+  const { requests, isPending, error } = useFetchRequests();
   const scheduleObj = useRef<ScheduleComponent>(null);
   const [scheduleData, setScheduleData] = useState<Date>(new Date(2024, 3, 17));
-  const data: Record<string, any>[] = extend(
-    [],
-    (dataSource as Record<string, any>).scheduleData,
-    false,
-    true
-  ) as Record<string, any>[];
 
   const onDragStart = (args: DragEventArgs): void => {
     console.log("object");
@@ -76,14 +72,14 @@ function Calendar() {
             height="650px"
             ref={scheduleObj}
             selectedDate={scheduleData}
-            eventSettings={{ dataSource: data }}
+            eventSettings={{ dataSource: requests }}
             dragStart={onDragStart}
             eventClick={onClickEvent}
             showQuickInfo={false}
             editorTemplate={popupTemplate}
             popupOpen={onPopupOpen}
             currentView="WorkWeek"
-            showHeaderBar={false}
+            // showHeaderBar={false}
             startHour="07:00"
             endHour="18:00"
             dateHeaderTemplate={(args: Record<string, any>) =>

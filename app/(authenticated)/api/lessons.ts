@@ -1,4 +1,4 @@
-import { Lesson } from "../admin/settings/lessons/types";
+import { Lesson } from "../(adminPages)/admin/settings/lessons/types";
 import api from "./axios";
 
 export const getLessons = async () => {

@@ -12,15 +12,15 @@ import Table from "@/app/(authenticated)/ui/Table";
 
 import { useFetchClasses } from "./useFetchClasses";
 
-import Loading from "../../../loading";
+import Loading from "../../../../loading";
 import { useCreateClass } from "./useCreateClass";
 import { Class } from "./types";
-import { ModalContent } from "../../../types/modal";
+import { ModalContent } from "../../../../types/modal";
 import { useUpdateClass } from "./useUpdateClass";
 import { useRemoveClass } from "./useRemoveClass";
-import AddButton from "../../../ui/AddButton";
+import AddButton from "../../../../ui/AddButton";
 
-function Page() {
+function ClassesPage() {
   const [modal, setModal] = useState({
     open: false,
     modalType: "",
@@ -35,7 +35,10 @@ function Page() {
   const classNameInput = useRef<{
     idclasses: string;
     value: string;
-  } | null>(null);
+  }>({
+    idclasses: "",
+    value: "",
+  });
 
   const { classes, error, isPending } = useFetchClasses();
   const {
@@ -218,7 +221,7 @@ function Page() {
   );
 }
 
-export default Page;
+export default ClassesPage;
 
 const PageHeader = styled.div`
   display: flex;

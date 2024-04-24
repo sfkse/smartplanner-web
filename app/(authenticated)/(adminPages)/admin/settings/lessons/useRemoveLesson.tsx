@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Lesson } from "./types";
-import { removeLesson } from "../../../api/lessons";
+import { removeLesson } from "../../../../api/lessons";
 
 export const useRemoveLesson = () => {
   const queryClient = useQueryClient();

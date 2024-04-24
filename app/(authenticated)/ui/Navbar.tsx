@@ -7,22 +7,34 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import UserMenu from "./UserMenu";
 
-const Navbar = () => {
+type NavbarProps = {
+  type?: "admin" | "nonAdmin";
+};
+const Navbar = (props: NavbarProps) => {
   const pathname = usePathname();
+
+  const menuItems =
+    props.type === "admin"
+      ? [
+          { name: "DASHBOARD", href: "/admin" },
+          { name: "PLANERING", href: "/admin/plan/overview" },
+          { name: "INSTÄLLNINGAR", href: "/admin/settings/classes" },
+        ]
+      : [
+          { name: "HOME", href: "/" },
+          { name: "REQUEST", href: "/request" },
+        ];
+
   return (
     <NavbarContainer>
       <Wrapper>
         <Logo>TIMEX</Logo>
         <Links>
-          <MenuLink pathname={pathname} href="/admin">
-            DASHBOARD
-          </MenuLink>
-          <MenuLink pathname={pathname} href="/admin/plan/overview">
-            PLANERING
-          </MenuLink>
-          <MenuLink pathname={pathname} href="/admin/settings/classes">
-            INSTÄLLNINGAR
-          </MenuLink>
+          {menuItems.map((item) => (
+            <MenuLink key={item.name} pathname={pathname} href={item.href}>
+              {item.name}
+            </MenuLink>
+          ))}
         </Links>
       </Wrapper>
       <UserMenuWrapper>

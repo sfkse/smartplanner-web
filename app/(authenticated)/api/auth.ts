@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import api from "./axios";
-import { User } from "../admin/settings/users/types";
+import { User } from "../(adminPages)/admin/settings/users/types";
 // import  } from "../types/form";
 
 type FormData = {

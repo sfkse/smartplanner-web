@@ -1,16 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateClass } from "@/app/(authenticated)/api/classes";
-import { Lesson } from "./types";
-import { updateLesson } from "../../../api/lessons";
+import { createClass } from "@/app/(authenticated)/api/classes";
+import { createLesson } from "@/app/(authenticated)/api/lessons";
+import { createUser } from "../../../../api/users";
+import { User } from "./types";
 
-export const useUpdateLesson = () => {
+type FormState = {
+  name: string;
+};
+
+export const useCreateUser = () => {
   const queryClient = useQueryClient();
 
   const { mutate, error, isPending, reset } = useMutation({
-    mutationFn: (formState: Lesson) => updateLesson(formState),
+    mutationFn: (formState: User) => createUser(formState),
     onSuccess: async (data) => {
       if (data) {
-        queryClient.invalidateQueries({ queryKey: ["lessons"] });
         queryClient.invalidateQueries({ queryKey: ["users"] });
       }
     },

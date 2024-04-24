@@ -10,11 +10,11 @@ import DialogPopup from "@/app/(authenticated)/ui/DialogPopup";
 import Button from "@/app/(authenticated)/ui/Button";
 import Table from "@/app/(authenticated)/ui/Table";
 
-import Loading from "../../../loading";
+import Loading from "../../../../loading";
 import { Lesson } from "./types";
-import { ModalContent } from "../../../types/modal";
+import { ModalContent } from "../../../../types/modal";
 import { useUpdateLesson } from "./useUpdateLesson";
-import AddButton from "../../../ui/AddButton";
+import AddButton from "../../../../ui/AddButton";
 import { useFetchLessons } from "./useFetchLessons";
 import { useCreateLesson } from "./useCreateLesson";
 import { useRemoveLesson } from "./useRemoveLesson";

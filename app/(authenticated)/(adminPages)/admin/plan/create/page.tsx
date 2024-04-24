@@ -11,7 +11,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Autocomplete, TextField } from "@mui/material";
 import { createTimePlanDialogueContent } from "../utils";
 
-function Page() {
+function CreatePlanPage() {
   const [open, setOpen] = useState(false);
 
   const userFilters = ["24/25"];
@@ -85,7 +85,7 @@ function Page() {
   );
 }
 
-export default Page;
+export default CreatePlanPage;
 
 const PageHeader = styled.div`
   display: flex;

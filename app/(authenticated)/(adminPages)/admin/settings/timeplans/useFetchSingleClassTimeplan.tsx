@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSingleClassTimeplans } from "../../../api/timeplans";
+import { getSingleClassTimeplans } from "../../../../api/timeplans";
 import { ClassTimeplan } from "./types";
 
 export const useFetchSingleClassTimeplans = (

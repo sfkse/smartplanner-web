@@ -1,4 +1,4 @@
-import { ClassTimeplan } from "../admin/settings/timeplans/types";
+import { ClassTimeplan } from "../(adminPages)/admin/settings/timeplans/types";
 import api from "./axios";
 
 export const getTimeplans = async () => {

@@ -1,4 +1,4 @@
-import { Class } from "../admin/settings/classes/types";
+import { Class } from "../(adminPages)/admin/settings/classes/types";
 import api from "./axios";
 
 export const getClasses = async () => {

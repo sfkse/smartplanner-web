@@ -3,13 +3,13 @@
 import React from "react";
 import Calendar from "@/app/(authenticated)/ui/Calendar";
 import styled from "styled-components";
-import DropdownList from "../../../ui/DropdownList";
-import Options from "../../../ui/Options";
+import DropdownList from "../../../../ui/DropdownList";
+import Options from "../../../../ui/Options";
+import { useFetchRequests } from "./useFetchRequests";
 
-function Page() {
-  const classFilter = ["Class 6C", "Class 7A", "Class 8B"];
-  const periodFilter = ["2024-2025", "2025-2026", "2026-2027"];
-
+function PlanOverviewPage() {
+  // const classFilter = ["Class 6C", "Class 7A", "Class 8B"];
+  // const periodFilter = ["2024-2025", "2025-2026", "2026-2027"];
   return (
     <PageWrapper>
       <OptionsWrapper>
@@ -24,7 +24,7 @@ function Page() {
   );
 }
 
-export default Page;
+export default PlanOverviewPage;
 
 const PageWrapper = styled.div`
   padding: 1rem;

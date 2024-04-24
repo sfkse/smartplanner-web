@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../../../api/users";
+import { getUsers } from "../../../../api/users";
 
 export const useFetchUsers = () => {
   const { data, isPending, error } = useQuery({
