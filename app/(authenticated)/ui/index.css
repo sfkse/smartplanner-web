@@ -47,3 +47,62 @@ hr {
 .time-scale.e-schedule .e-timeline-view .e-content-wrap table col {
   width: 75px;
 }
+
+/* Custom calendar view */
+.calendar {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  position: relative; /* Needed for absolute positioning of draggables */
+}
+
+.header-row,
+.row {
+  display: grid;
+  grid-template-columns: 60px repeat(5, 1fr);
+}
+
+.header-cell,
+.time-cell,
+.cell {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  position: relative; /* For the positioning of draggables */
+}
+
+.header-cell {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.time-cell {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.cell {
+  height: 80px;
+}
+
+.corner-cell {
+  border: 1px solid #ccc;
+  padding: 8px;
+  background-color: #f0f0f0;
+}
+
+.draggable {
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.resizer {
+  height: 10px;
+  background-color: darkblue;
+  cursor: ns-resize;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+

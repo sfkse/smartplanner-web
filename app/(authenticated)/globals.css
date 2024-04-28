@@ -54,6 +54,7 @@
   --primary-dark: #003366;
   --primary-dark-secondary: #31394d;
   --primary-light: #6699cc;
+  --primary-extra-light: #e1f0ff;
   --primary-light-transparent: #6699cc33;
   --secondary-dark: #f0f0f0;
   --secondary-light: #ffff;
@@ -110,6 +111,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  height: 100%;
 }
 
 a {

@@ -9,17 +9,7 @@ export const useFetchRequests = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const requests = data
-    ? data.map((request: Request) => {
-        return {
-          Id: request.idrequests,
-          Subject: request.user.firstname + " " + request.user.lastname,
-          Description: request.description,
-          StartTime: request.start,
-          EndTime: request.end,
-        };
-      })
-    : [];
+  const requests = data ? data : [];
 
   return { requests, isPending, error };
 };

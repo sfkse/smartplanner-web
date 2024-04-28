@@ -6,3 +6,7 @@ export const getRequests = async () => {
   return data;
 };
 
+export const createRequest = async (requestData) => {
+  const { data } = await api.post("/requests/create", requestData);
+  return data;
+};

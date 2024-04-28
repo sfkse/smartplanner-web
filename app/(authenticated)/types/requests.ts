@@ -4,5 +4,7 @@ export type Request = {
   description: string;
   start: string;
   end: string;
+  title: string;
+  properties: object;
 };
 

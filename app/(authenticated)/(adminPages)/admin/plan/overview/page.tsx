@@ -32,7 +32,8 @@ const PageWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  max-width: 60%;
+  width: 100%;
+  /* max-width: 60%; */
 `;
 
 const FilterWrapper = styled.div`

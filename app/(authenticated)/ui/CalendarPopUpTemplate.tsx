@@ -3,6 +3,7 @@ import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import React from "react";
 
 function CalendarPopUpTemplate(props: Record<string, any>) {
+  console.log(props);
   return props !== undefined ? (
     <table className="custom-event-editor">
       <tbody>
@@ -10,7 +11,7 @@ function CalendarPopUpTemplate(props: Record<string, any>) {
           <td className="e-textlabel">Title</td>
           <td colSpan={4}>
             <input
-              id="Summary"
+              id="Subject"
               className="e-field e-input"
               type="text"
               name="Subject"
@@ -37,7 +38,7 @@ function CalendarPopUpTemplate(props: Record<string, any>) {
               format="dd/MM/yy hh:mm a"
               id="StartTime"
               data-name="StartTime"
-              value={new Date(props.startTime || props.StartTime)}
+              value={new Date(props.startTime)}
               className="e-field"
             ></DateTimePickerComponent>
           </td>
