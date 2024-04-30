@@ -1,21 +1,19 @@
-export type Draggable = {
-  day: number;
-  hour: number;
-  top: number;
-  left: number;
-  height: number;
-  width: number;
-  data: {
-    title: string;
-    startDate: string;
-    startTime: string;
-    endDate: string;
-    endTime: string;
-    description: string;
-    userID: string;
+export type TDraggable = {
+  requestID: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  description: string;
+  userID: string;
+  properties: {
+    top: number;
+    left: number;
+    height: number;
+    width: number;
   };
 };
 
-export type Draggables = {
-  properties: Draggable;
-}[];
+export type TDraggables = TDraggable[];
+

@@ -28,6 +28,7 @@ export default function Loading({ children, isLoading }: LoadingProps) {
 
 const Wrapper = styled.div<{ isLoading: boolean }>`
   position: relative;
+  width: 100%;
   opacity: ${(props) => (props.isLoading ? 0.5 : 1)};
   pointer-events: ${(props) => (props.isLoading ? "none" : "all")};
 `;

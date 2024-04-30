@@ -1,166 +1,52 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import styled from "styled-components";
 import Button from "./Button";
 import { useFetchRequests } from "../(adminPages)/admin/plan/overview/useFetchRequests";
 import { useCreateRequest } from "../(userPages)/request/useCreateRequest";
 import { useFetchAuthUser } from "../hooks/auth/useFetchAuthUser";
-import { Draggable, Draggables } from "../(userPages)/request/types";
+import { TDraggable, TDraggables } from "../(userPages)/request/types";
+import {
+  CELL_HEIGHT,
+  calculateDimensions,
+  calendaHours,
+  calendarDays,
+  getCell,
+} from "../utils/calendar";
+import Loading from "@/app/(authpages)/loading";
 
 const WeekViewCalendar = () => {
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const hours = [
-    "08:00",
-    "08:15",
-    "08:30",
-    "08:45",
-    "09:00",
-    "09:15",
-    "09:30",
-    "09:45",
-    "10:00",
-    "10:15",
-    "10:30",
-    "10:45",
-    "11:00",
-    "11:15",
-    "11:30",
-    "11:45",
-    "12:00",
-    "12:15",
-    "12:30",
-    "12:45",
-    "13:00",
-    "13:15",
-    "13:30",
-    "13:45",
-    "14:00",
-    "14:15",
-    "14:30",
-    "14:45",
-    "15:00",
-    "15:15",
-    "15:30",
-    "15:45",
-    "16:00",
-    "16:15",
-    "16:30",
-    "16:45",
-    "17:00",
-  ];
   const { authUser, isPending: isAuthUserPending } = useFetchAuthUser();
   const { requests, isPending: isRequestPending, error } = useFetchRequests();
-
+  console.log(requests);
   const {
     mutate,
     error: createError,
     isPending: createPending,
   } = useCreateRequest();
-  const [draggables, setDraggables] = useState<Draggables>([]);
+  const [draggables, setDraggables] = useState<TDraggables>([]);
   const [modal, setModal] = useState({
     open: false,
+    type: "",
     content: {
-      day: 0,
-      hour: 0,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      height: 80,
-      width: 200,
-      isDataUpdated: false,
-      data: {
-        title: "",
-        startDate: "",
-        endDate: "",
-        startTime: "",
-        endTime: "",
-        description: "",
-        userID: "",
+      requestID: "",
+      title: "",
+      startDate: "",
+      endDate: "",
+      startTime: "",
+      endTime: "",
+      description: "",
+      userID: "",
+      properties: {
+        top: 0,
+        left: 0,
+        height: 0,
+        width: 0,
       },
-    } as Draggable,
+    },
   });
-
-  const handleDoubleClick = () => {
-    setModal({ ...modal, open: true });
-  };
-
-  // const openPopup = () => {
-  //   setModal({ ...modal, open: true });
-  // };
-
-  const handleSubmit = () => {
-    const data = modal.content;
-    console.log(data);
-    // Check if the startTime is before the endTime
-    // if (data.data.startTime > data.data.endTime) {
-    //   alert("Start time must be before end time");
-    //   return;
-    // }
-    // Check if the startTime is valid (between 08:00 and 17:00)
-    // if (data.data.startTime < "08:00" || data.data.startTime > "17:00") {
-    //   alert("Start time must be between 08:00 and 17:00");
-    //   return;
-    // }
-    // Check if the endTime is valid (between 08:00 and 17:00)
-    // if (data.data.endTime < "08:00" || data.data.endTime > "17:00") {
-    //   alert("End time must be between 08:00 and 17:00");
-    //   return;
-    // }
-    // Find the index of the startTIme in the hours array.
-    const hourParts = data.data.startTime.split(":")[0].toString() + ":00";
-    const hourIndex = hours.findIndex((h) => h === hourParts);
-    // data.day is in the format of 2024-10-12. We need to find the day of the week.
-    const dayIndex = new Date(data.data.startDate).getDay();
-    const day = days[dayIndex - 1];
-
-    const cellToBeCreated = document.getElementsByClassName(
-      `cell-${day}-${hourParts}`
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    // Place the cell in the correct position
-    const top = cellToBeCreated[0].offsetTop;
-    const left = cellToBeCreated[0].offsetLeft;
-    // Calculate the height of the cell. Default height is 80px. We need to calculate the difference between the start and end time. Each hour is 80px. Each 15 minutes is 20px. Each 5 minutes is 10px.
-    const startTime = data.data.startTime.split(":");
-    const endTime = data.data.endTime.split(":");
-    const startHour = parseInt(startTime[0]);
-    const endHour = parseInt(endTime[0]);
-    const startMinute = parseInt(startTime[1]);
-    const endMinute = parseInt(endTime[1]);
-    let hourDifference = endHour - startHour;
-    let minuteDifference = endMinute - startMinute;
-    if (minuteDifference < 0) {
-      minuteDifference = 60 + minuteDifference;
-      hourDifference -= 1;
-    }
-    const height = hourDifference * 160 + (minuteDifference / 15) * 40;
-
-    console.log(hourDifference, minuteDifference, height);
-    const newDraggable = {
-      day: dayIndex,
-      hour: hourIndex,
-      top: top,
-      left: left,
-      height: height,
-      width: cellToBeCreated[0].getBoundingClientRect().width,
-      isDataUpdated: false,
-      data: {
-        title: data.data.title,
-        startDate: data.data.startDate,
-        endDate: data.data.endDate,
-        startTime: data.data.startTime,
-        endTime: data.data.endTime,
-        description: data.data.description,
-        userID: authUser.idusers,
-      },
-    };
-
-    setModal({ ...modal, open: false });
-    mutate(newDraggable);
-  };
 
   useEffect(() => {
     if (requests.length > 0) {
@@ -186,8 +72,8 @@ const WeekViewCalendar = () => {
           const height = event.clientY - draggable.getBoundingClientRect().top;
           // Snap resize to grid (40px per slot)
           draggable.style.height = `${Math.max(
-            40,
-            Math.round(height / 40) * 40 - 10
+            CELL_HEIGHT,
+            Math.round(height / CELL_HEIGHT) * CELL_HEIGHT - 3
           )}px`;
         };
 
@@ -195,11 +81,142 @@ const WeekViewCalendar = () => {
           document.removeEventListener("mousemove", onMouseResize);
         };
       });
+
+      window.addEventListener("resize", handleResize);
+
+      function handleResize() {
+        // Get the width of the cell
+      }
     });
+
+    return () => {
+      draggableElements.forEach((draggable: any) => {
+        draggable.removeEventListener("mousedown", (e: MouseEvent) => {
+          e.preventDefault();
+        });
+      });
+    };
   }, [draggables]);
   console.log(draggables);
+  // const calculateTop = (hourIndex) => {
+  //   // Calculate and return new top position based on hourIndex
+  //   return hourIndex * 40; // Example calculation
+  // };
+
+  // const calculateLeft = (dayIndex) => {
+  //   // Calculate and return new left position based on dayIndex
+  //   const cellWidth =
+  //     document.querySelector(".calendar").offsetWidth / days.length;
+  //   return dayIndex * cellWidth;
+  // };
+
+  // function getWeekNumbers() {
+  //   const today = new Date();
+  //   const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+  //   const pastDaysOfYear =
+  //     (today.valueOf() - firstDayOfYear.valueOf()) / 86400000;
+  //   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  // }
+  // console.log(getWeekNumbers());
+
+  const handleDoubleClick = () => {
+    setModal({ ...modal, open: true, type: "create" });
+  };
+
+  // const openPopup = () => {
+  //   setModal({ ...modal, open: true });
+  // };
+
+  const handleSubmit = () => {
+    const data = modal.content;
+    // Check if the startTime is before the endTime
+    // if (data.startTime > data.endTime) {
+    //   alert("Start time must be before end time");
+    //   return;
+    // }
+    // Check if the startTime is valid (between 08:00 and 17:00)
+    // if (data.startTime < "08:00" || data.startTime > "17:00") {
+    //   alert("Start time must be between 08:00 and 17:00");
+    //   return;
+    // }
+    // Check if the endTime is valid (between 08:00 and 17:00)
+    // if (data.endTime < "08:00" || data.endTime > "17:00") {
+    //   alert("End time must be between 08:00 and 17:00");
+    //   return;
+    // }
+
+    const cellToBeCreated = getCell(data.startTime, data.startDate);
+
+    const { left, top, height } = calculateDimensions(
+      cellToBeCreated,
+      data.startTime,
+      data.endTime
+    );
+
+    console.log(data);
+    const newDraggable = {
+      // day: dayIndex,
+      // hour: hourIndex,
+      // top: top,
+      // left: left,
+      // height: height,
+      // width: cellToBeCreated[0].getBoundingClientRect().width,
+      // isDataUpdated: false,
+      // data: {
+      //   title: data.title,
+      //   startDate: data.startDate,
+      //   endDate: data.endDate,
+      //   startTime: data.startTime,
+      //   endTime: data.endTime,
+      //   description: data.description,
+      //   userID: authUser.idusers,
+      // },
+      title: data.title,
+      description: data.description,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      userID: authUser.idusers,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      properties: {
+        top,
+        left,
+        height,
+        width: cellToBeCreated[0].getBoundingClientRect().width,
+      },
+    };
+
+    setModal({ ...modal, open: false, type: "" });
+    mutate(newDraggable);
+  };
+
+  const handleUpdate = (draggable: TDraggable) => {
+    setModal({
+      open: true,
+      type: "update",
+      content: {
+        requestID: draggable.requestID,
+        title: draggable.title,
+        startDate: draggable.startDate,
+        endDate: draggable.endDate,
+        startTime: draggable.startTime,
+        endTime: draggable.endTime,
+        description: draggable.description,
+        userID: draggable.userID,
+        properties: {
+          top: draggable.properties.top,
+          left: draggable.properties.left,
+          height: draggable.properties.height,
+          width: draggable.properties.width,
+        },
+      },
+    });
+
+    console.log(getCell(draggable.startTime, draggable.startDate));
+  };
+
   return (
-    <>
+    <Loading isLoading={isRequestPending || createPending}>
       {modal.open && (
         <Modal>
           <ContentWrapper>
@@ -214,11 +231,11 @@ const WeekViewCalendar = () => {
                       ...modal,
                       content: {
                         ...modal.content,
-                        data: { ...modal.content.data, title: e.target.value },
+                        title: e.target.value,
                       },
                     })
                   }
-                  value={modal.content.data.title}
+                  value={modal.content.title}
                 />
               </InputGroup>
               <InputGroup>
@@ -231,14 +248,11 @@ const WeekViewCalendar = () => {
                         ...modal,
                         content: {
                           ...modal.content,
-                          data: {
-                            ...modal.content.data,
-                            startDate: e.target.value,
-                          },
+                          startDate: e.target.value,
                         },
                       })
                     }
-                    value={modal.content.data.startDate}
+                    value={modal.content.startDate}
                   />
                   <Label>Start Time</Label>
                   <Input
@@ -248,14 +262,11 @@ const WeekViewCalendar = () => {
                         ...modal,
                         content: {
                           ...modal.content,
-                          data: {
-                            ...modal.content.data,
-                            startTime: e.target.value,
-                          },
+                          startTime: e.target.value,
                         },
                       })
                     }
-                    value={modal.content.data.startTime}
+                    value={modal.content.startTime}
                   />
                 </DateTimeWrapper>
               </InputGroup>
@@ -269,14 +280,11 @@ const WeekViewCalendar = () => {
                         ...modal,
                         content: {
                           ...modal.content,
-                          data: {
-                            ...modal.content.data,
-                            endDate: e.target.value,
-                          },
+                          endDate: e.target.value,
                         },
                       })
                     }
-                    value={modal.content.data.endDate}
+                    value={modal.content.endDate}
                   />
                   <Label>End Time</Label>
                   <Input
@@ -286,14 +294,11 @@ const WeekViewCalendar = () => {
                         ...modal,
                         content: {
                           ...modal.content,
-                          data: {
-                            ...modal.content.data,
-                            endTime: e.target.value,
-                          },
+                          endTime: e.target.value,
                         },
                       })
                     }
-                    value={modal.content.data.endTime}
+                    value={modal.content.endTime}
                   />
                 </DateTimeWrapper>
               </InputGroup>
@@ -305,14 +310,11 @@ const WeekViewCalendar = () => {
                       ...modal,
                       content: {
                         ...modal.content,
-                        data: {
-                          ...modal.content.data,
-                          description: e.target.value,
-                        },
+                        description: e.target.value,
                       },
                     })
                   }
-                  value={modal.content.data.description}
+                  value={modal.content.description}
                 />
               </InputGroup>
               <ButtonWrapper>
@@ -334,43 +336,47 @@ const WeekViewCalendar = () => {
           </ContentWrapper>
         </Modal>
       )}
-      <Calendar>
+
+      <Calendar className="calendar">
         <HeaderRow>
           <CornerCell></CornerCell>
-          {days.map((day) => (
+          {calendarDays.map((day) => (
             <HeaderCell className={`header-${day}`} key={day}>
               {day}
             </HeaderCell>
           ))}
         </HeaderRow>
-        {hours.map((hour) => (
+        {calendaHours.map((hour) => (
           <Row key={hour}>
             <TimeCell hour={hour} className={`header-${hour}`}>
               {hour.split(":")[1] === "00" ? hour : ""}
             </TimeCell>
-            {days.map((day) => (
+            {calendarDays.map((day) => (
               <Cell
                 className={`cell-${day}-${hour}`}
                 key={day + hour}
+                height={CELL_HEIGHT}
                 onDoubleClick={handleDoubleClick}
               ></Cell>
             ))}
           </Row>
         ))}
         {draggables.length > 0 &&
-          draggables.map((draggable, index) => (
+          draggables.map((draggable: TDraggable) => (
             <Draggable
-              key={index}
+              key={draggable.requestID}
               height={draggable.properties.height}
               top={draggable.properties.top}
               width={draggable.properties.width}
               left={draggable.properties.left}
               className="draggable"
+              onDoubleClick={() => handleUpdate(draggable)}
             >
               <DraggableContent>
-                <strong>{draggable.title}</strong>
-                <br />
-                {draggable.start} - {draggable.end}
+                <DraggableTitle>{draggable.title}</DraggableTitle>
+                <DraggableTime>
+                  {draggable.startTime} - {draggable.endTime}
+                </DraggableTime>
               </DraggableContent>
               <ResizeWrapper className="resize">
                 <Resizer />
@@ -378,7 +384,7 @@ const WeekViewCalendar = () => {
             </Draggable>
           ))}
       </Calendar>
-    </>
+    </Loading>
   );
 };
 
@@ -458,6 +464,7 @@ const ButtonWrapper = styled.div`
 `;
 
 // Calendar styles
+
 const Calendar = styled.div`
   display: flex;
   flex-direction: column;
@@ -497,20 +504,20 @@ const TimeCell = styled.div<{ hour: string }>`
     props.hour.split(":")[1] === "00" || props.hour.split(":")[1] === "30"
       ? "1px solid #ccc"
       : "none"};
-  padding: 8px;
+  /* padding: 8px; */
   text-align: center;
   position: relative;
   background-color: #f0f0f0;
   font-weight: bold;
 `;
 
-const Cell = styled.div`
+const Cell = styled.div<{ height?: number }>`
   border: 1px solid #ccc;
   border-top: none;
   padding: 8px;
   text-align: center;
   position: relative;
-  height: 40px;
+  height: ${(props) => `${props.height}px`};
 `;
 
 const Draggable = styled.div<{
@@ -528,10 +535,20 @@ const Draggable = styled.div<{
   top: ${(props) => `${props.top + 3}px`};
   width: ${(props) => `${props.width - 10}px`};
   left: ${(props) => `${props.left + 5}px`};
+  overflow: hidden;
 `;
 
 const DraggableContent = styled.div`
-  padding: 10px;
+  padding: 5px;
+`;
+
+const DraggableTitle = styled.p`
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const DraggableTime = styled.p`
+  font-size: 0.8rem;
 `;
 
 const ResizeWrapper = styled.div`
@@ -539,7 +556,7 @@ const ResizeWrapper = styled.div`
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 10px;
+  height: 5px;
   z-index: 10;
   background-color: var(--primary-light);
   cursor: ns-resize;

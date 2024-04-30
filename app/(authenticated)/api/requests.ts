@@ -1,4 +1,3 @@
-import { ClassTimeplan } from "../(adminPages)/admin/settings/timeplans/types";
 import api from "./axios";
 
 export const getRequests = async () => {
@@ -10,3 +9,4 @@ export const createRequest = async (requestData) => {
   const { data } = await api.post("/requests/create", requestData);
   return data;
 };
+

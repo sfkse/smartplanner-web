@@ -23,7 +23,7 @@ function layout({
   return (
     <>
       <SecondaryNavbar secondaryMenu={secondaryMenu} />
-      <ContentWrapper>{children}</ContentWrapper>
+      <>{children}</>
     </>
   );
 }
